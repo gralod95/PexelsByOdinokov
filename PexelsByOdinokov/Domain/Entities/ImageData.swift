@@ -5,8 +5,6 @@
 //  Created by Odinokov G. A. on 17.06.2024.
 //
 
-import UIKit
-
 struct ImageData: ImageShortInfo {
     let id: Int
     let imageName: String

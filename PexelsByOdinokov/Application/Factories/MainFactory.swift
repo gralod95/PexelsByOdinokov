@@ -8,16 +8,30 @@
 import UIKit
 
 final class MainFactory {
-    let useCase: GetImagesUseCase
+    // MARK: - Nested types
+
+    private enum DataConfiguration {
+        static let domain = "https://api.pexels.com/"
+        static let authorizationKey = "HuKFiM647dvmxHB5hrRzWtlvn9tbTphsCAR3XznthuVhssQz55CdWMYn"
+    }
+
+    // MARK: - Private properties
+
+    private let useCase: GetImagesUseCase
+
+    // MARK: - Init
 
     init() {
         let dataService = ImagesDataService(
-            domain: "https://api.pexels.com/",
-            authorizationKey: "HuKFiM647dvmxHB5hrRzWtlvn9tbTphsCAR3XznthuVhssQz55CdWMYn"
+            domain: DataConfiguration.domain,
+            authorizationKey: DataConfiguration.authorizationKey
         )
         let imageService = ImageService()
+
         useCase = GetImagesUseCase(dataService: dataService, imageService: imageService)
     }
+
+    // MARK: - Public methods
 
     func makeMainViewController(openDetailInfo: @escaping (_ index: Int) -> Void) -> UIViewController {
         let viewModel = MainSceneViewModel(useCase: useCase, openDetailInfo: openDetailInfo)
@@ -26,6 +40,7 @@ final class MainFactory {
 
         return navigationViewController
     }
+    
     func makeDetailViewController(imageIndex: Int) -> UIViewController {
         let viewModel = DetailSceneViewModel(useCase: useCase, imageIndex: imageIndex)
         let viewController = DetailSceneViewController(viewModel: viewModel)

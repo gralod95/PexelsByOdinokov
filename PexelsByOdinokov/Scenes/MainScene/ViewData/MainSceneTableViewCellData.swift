@@ -7,30 +7,22 @@
 
 import UIKit
 
-struct MainSceneTableViewCellData: Hashable {
+struct MainSceneTableViewCellData {
     let id: Int
     let title: String
     let subtitle: String
     let image: Image
+}
 
+extension MainSceneTableViewCellData {
     enum Image {
         case loading
         case image(UIImage)
         case failedToLoad
-
-        private var id: String {
-            switch self {
-            case .loading:
-                return "loading"
-            case .image:
-                return "image"
-            case .failedToLoad:
-                return "failedToLoad"
-            }
-
-        }
     }
+}
 
+extension MainSceneTableViewCellData: Hashable {
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }

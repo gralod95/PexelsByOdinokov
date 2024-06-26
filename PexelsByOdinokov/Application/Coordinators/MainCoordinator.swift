@@ -21,7 +21,7 @@ final class MainCoordinator {
 
     // MARK: - Public methods
 
-    func startMainScene(window: UIWindow) {
+    func start(window: UIWindow) {
         self.window = window
 
         let viewController = factory.makeMainViewController(openDetailInfo: startDetailInfoScene(imageIndex:))
@@ -29,12 +29,15 @@ final class MainCoordinator {
         window.makeKeyAndVisible()
     }
 
-    func startDetailInfoScene(imageIndex: Int) {
+    // MARK: - Private methods
+
+    private func startDetailInfoScene(imageIndex: Int) {
         let detailInfoViewController = factory.makeDetailViewController(imageIndex: imageIndex)
+
         push(viewController: detailInfoViewController)
     }
 
-    // MARK: - Private methods
+    // MARK: Helpers
 
     private func push(viewController: UIViewController) {
         guard let navigationController = (window?.rootViewController as? UINavigationController) else { return }

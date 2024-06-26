@@ -13,14 +13,14 @@ class SceneDelegate: UIResponder {
     var coordinator: MainCoordinator = .init(mainFactory: .init())
 }
 
-    // MARK: - +UIWindowSceneDelegate
+// MARK: - +UIWindowSceneDelegate
 
 extension SceneDelegate: UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
 
         let window = UIWindow(windowScene: windowScene)
-        coordinator.startMainScene(window: window)
+        coordinator.start(window: window)
     }
 
     func sceneDidDisconnect(_ scene: UIScene) { }

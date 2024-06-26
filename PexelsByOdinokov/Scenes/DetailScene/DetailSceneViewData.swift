@@ -12,5 +12,3 @@ enum DetailSceneViewData {
     case loadingError(LoadingErrorViewData)
     case image(UIImage)
 }
-
-

@@ -47,6 +47,7 @@ final class GetImagesUseCase {
             return await .success(state.getData())
         case .failure(let error):
             let data = await state.getData()
+
             return data.isEmpty ? .failure(getError(from: error)) : .success(data)
         }
     }
@@ -59,6 +60,7 @@ final class GetImagesUseCase {
             switch await loadImage(previewImageUrlText) {
             case .success(let image):
                 await state.set(previewImage: image, index: index)
+
                 return .success(.loaded(image))
             case .failure(let error):
                 return .failure(error)
@@ -67,6 +69,7 @@ final class GetImagesUseCase {
             return .success(.loaded(image))
         case .outOfScopeError:
             assertionFailure("User opened image details for invalid image index!")
+
             return .failure(.serviceError)
         }
     }
@@ -79,6 +82,7 @@ final class GetImagesUseCase {
             switch await loadImage(imageUrlText) {
             case .success(let image):
                 await state.set(image: image, index: index)
+
                 return .success(image)
             case .failure(let error):
                 return .failure(error)
@@ -87,6 +91,7 @@ final class GetImagesUseCase {
             return .success(image)
         case .outOfScopeError:
             assertionFailure("User opened image details for invalid image index!")
+
             return .failure(.serviceError)
         }
     }
@@ -105,12 +110,9 @@ final class GetImagesUseCase {
     private func loadImage(_ imageUrlText: String) async -> Result<UIImage, UseCaseError> {
         switch await imageService.loadImage(urlText: imageUrlText) {
         case .success(let data):
-            switch UIImage(data: data) {
-            case .some(let imageContent):
-                return .success(imageContent)
-            case .none:
-                return .failure(.serviceError)
-            }
+            guard let image = UIImage(data: data) else { return .failure(.serviceError) }
+
+            return .success(image)
         case .failure(let error):
             return .failure(getError(from: error))
         }

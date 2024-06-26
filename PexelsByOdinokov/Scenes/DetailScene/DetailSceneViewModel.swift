@@ -34,14 +34,12 @@ final class DetailSceneViewModel {
         }
     }
 
+    // MARK: - Private methods
+
     @MainActor
     private func set(data: Result<UIImage, UseCaseError>) async {
         switch data {
         case .success(let image):
-            guard let image = await image.byPreparingForDisplay() else {
-                viewDataWasUpdated?(.loadingError(.serviceError))
-                return
-            }
             viewDataWasUpdated?(.image(image))
         case .failure(let error):
             let errorData: LoadingErrorViewData = switch error {

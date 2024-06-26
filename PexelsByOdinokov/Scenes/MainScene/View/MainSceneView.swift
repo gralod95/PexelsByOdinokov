@@ -120,7 +120,6 @@ final class MainSceneView: UIView {
     }
 
     private func set(cellsData: [MainSceneTableViewCellData], animated: Bool) {
-//        errorView.isHidden = true
         var snapshot = NSDiffableDataSourceSnapshot<Int, MainSceneTableViewCellData>()
         snapshot.appendSections([.zero])
         snapshot.appendItems(cellsData)
